@@ -1,10 +1,18 @@
 import streamlit as st
 import pickle
+import os
 
-image1 = 'Iris Flowers//Irissetosa1.jpg'
-image2 = "Iris Flowers//Iris_versicolor__flo_npyvSQOSVQ8O.jpeg"
-image3 = "Iris Flowers//iris_virginica_virginica_lg.jpg" 
-model = pickle.load(open("Data.pkl", "rb"))
+# Fix the file path for Data.pkl
+file_path = os.path.join(os.path.dirname(__file__), "Data.pkl")
+
+# Load the model
+with open(file_path, "rb") as file:
+    model = pickle.load(file)
+
+# Fix image paths
+image1 = os.path.join(os.path.dirname(__file__), "Iris Flowers", "Irissetosa1.jpg")
+image2 = os.path.join(os.path.dirname(__file__), "Iris Flowers", "Iris_versicolor__flo_npyvSQOSVQ8O.jpeg")
+image3 = os.path.join(os.path.dirname(__file__), "Iris Flowers", "iris_virginica_virginica_lg.jpg")
 
 def predict():
     st.title("Predicting the Iris Flower Species")
@@ -20,10 +28,10 @@ def predict():
         op = model.predict(input_data)
 
         if op[0] == 0:
-            st.image(image1,caption="Iris Setosa")
+            st.image(image1, caption="Iris Setosa")
         elif op[0] == 1:
-            st.image(image2,caption="Iris Versicolor")
+            st.image(image2, caption="Iris Versicolor")
         elif op[0] == 2:
-            st.image(image3,caption="Iris Virginica")
+            st.image(image3, caption="Iris Virginica")
 
 predict()
